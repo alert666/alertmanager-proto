@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package api.data_tunnel.v1;
+
+option go_package = "github.com/alert666/alertmanager-proto/gen/go/data_tunnel/v1";
+
+service TunnelService {
+  rpc DataTunnel(stream TunnelMessage) returns (stream TunnelMessage);
+}
+
+message TunnelMessage {
+  string request_id = 1;
+  oneof payload {
+    // Client → Server
+    Init          init           = 10;
+    CommandResult command_result = 11;
+
+    // Server → Client
+    Command command = 20;
+  }
+}
+
+// Client → Server: 客户端连上后发送的注册信息
+message Init {
+  string agent_id   = 1;
+  string cluster_id = 2;
+  string version    = 3;
+  map<string, string> labels = 4;
+}
+
+// Client → Server: 命令执行结果
+message CommandResult {
+  CommandType command_type = 1;
+  bool        ok           = 2;
+  string      error        = 3;
+  bytes       data         = 4;
+}
+
+// Server → Client: 服务端下发给客户端的指令
+message Command {
+  CommandType        type        = 1;
+  string             description = 2;
+  map<string, string> params     = 3;
+}
+
+enum CommandType {
+  COMMAND_TYPE_UNSPECIFIED             = 0;
+  COMMAND_TYPE_GET_ALERTMANAGER_CONFIG = 1;
+  COMMAND_TYPE_GET_PROMETHEUS_CONFIG   = 2;
+  COMMAND_TYPE_RELOAD_ALERTMANAGER     = 3;
+  COMMAND_TYPE_RELOAD_PROMETHEUS       = 4;
+}
