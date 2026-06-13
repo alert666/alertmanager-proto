@@ -24,11 +24,13 @@ const (
 type CommandType int32
 
 const (
-	CommandType_COMMAND_TYPE_UNSPECIFIED             CommandType = 0
-	CommandType_COMMAND_TYPE_GET_ALERTMANAGER_CONFIG CommandType = 1
-	CommandType_COMMAND_TYPE_GET_PROMETHEUS_CONFIG   CommandType = 2
-	CommandType_COMMAND_TYPE_RELOAD_ALERTMANAGER     CommandType = 3
-	CommandType_COMMAND_TYPE_RELOAD_PROMETHEUS       CommandType = 4
+	CommandType_COMMAND_TYPE_UNSPECIFIED                CommandType = 0
+	CommandType_COMMAND_TYPE_GET_ALERTMANAGER_CONFIG    CommandType = 1
+	CommandType_COMMAND_TYPE_GET_PROMETHEUS_CONFIG      CommandType = 2
+	CommandType_COMMAND_TYPE_RELOAD_ALERTMANAGER        CommandType = 3
+	CommandType_COMMAND_TYPE_RELOAD_PROMETHEUS          CommandType = 4
+	CommandType_COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG CommandType = 5
+	CommandType_COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG   CommandType = 6
 )
 
 // Enum value maps for CommandType.
@@ -39,13 +41,17 @@ var (
 		2: "COMMAND_TYPE_GET_PROMETHEUS_CONFIG",
 		3: "COMMAND_TYPE_RELOAD_ALERTMANAGER",
 		4: "COMMAND_TYPE_RELOAD_PROMETHEUS",
+		5: "COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG",
+		6: "COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG",
 	}
 	CommandType_value = map[string]int32{
-		"COMMAND_TYPE_UNSPECIFIED":             0,
-		"COMMAND_TYPE_GET_ALERTMANAGER_CONFIG": 1,
-		"COMMAND_TYPE_GET_PROMETHEUS_CONFIG":   2,
-		"COMMAND_TYPE_RELOAD_ALERTMANAGER":     3,
-		"COMMAND_TYPE_RELOAD_PROMETHEUS":       4,
+		"COMMAND_TYPE_UNSPECIFIED":                0,
+		"COMMAND_TYPE_GET_ALERTMANAGER_CONFIG":    1,
+		"COMMAND_TYPE_GET_PROMETHEUS_CONFIG":      2,
+		"COMMAND_TYPE_RELOAD_ALERTMANAGER":        3,
+		"COMMAND_TYPE_RELOAD_PROMETHEUS":          4,
+		"COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG": 5,
+		"COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG":   6,
 	}
 )
 
@@ -414,13 +420,15 @@ const file_api_data_tunnel_v1_data_tunnel_proto_rawDesc = "" +
 	"\x06Params\x18\x03 \x03(\v2'.api.data_tunnel.v1.Command.ParamsEntryR\x06Params\x1a9\n" +
 	"\vParamsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\xc7\x01\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\x9f\x02\n" +
 	"\vCommandType\x12\x1c\n" +
 	"\x18COMMAND_TYPE_UNSPECIFIED\x10\x00\x12(\n" +
 	"$COMMAND_TYPE_GET_ALERTMANAGER_CONFIG\x10\x01\x12&\n" +
 	"\"COMMAND_TYPE_GET_PROMETHEUS_CONFIG\x10\x02\x12$\n" +
 	" COMMAND_TYPE_RELOAD_ALERTMANAGER\x10\x03\x12\"\n" +
-	"\x1eCOMMAND_TYPE_RELOAD_PROMETHEUS\x10\x042g\n" +
+	"\x1eCOMMAND_TYPE_RELOAD_PROMETHEUS\x10\x04\x12+\n" +
+	"'COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG\x10\x05\x12)\n" +
+	"%COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG\x10\x062g\n" +
 	"\rTunnelService\x12V\n" +
 	"\n" +
 	"DataTunnel\x12!.api.data_tunnel.v1.TunnelMessage\x1a!.api.data_tunnel.v1.TunnelMessage(\x010\x01B>Z<github.com/alert666/alertmanager-proto/gen/go/data_tunnel/v1b\x06proto3"
