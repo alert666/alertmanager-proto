@@ -1,4 +1,4 @@
-syntax = "proto3";
+﻿syntax = "proto3";
 
 package api.data_tunnel.v1;
 
@@ -9,38 +9,38 @@ service TunnelService {
 }
 
 message TunnelMessage {
-  string request_id = 1;
-  oneof payload {
+   string TaskId = 1;
+  oneof Payload {
     // Client → Server
-    Init          init           = 10;
-    CommandResult command_result = 11;
+    Init          Init           = 10;
+    CommandResult CommandResult = 11;
 
     // Server → Client
-    Command command = 20;
+    Command Command = 20;
   }
 }
 
 // Client → Server: 客户端连上后发送的注册信息
 message Init {
-  string agent_id   = 1;
-  string cluster_id = 2;
-  string version    = 3;
-  map<string, string> labels = 4;
+  string AgentId   = 1;
+  string ClusterId = 2;
+  string Version    = 3;
+  map<string, string> Labels = 4;
 }
 
 // Client → Server: 命令执行结果
 message CommandResult {
-  CommandType command_type = 1;
-  bool        ok           = 2;
-  string      error        = 3;
-  bytes       data         = 4;
+  CommandType CommandType = 1;
+  bool        Ok           = 2;
+  string      Error        = 3;
+  bytes       Data         = 4;
 }
 
 // Server → Client: 服务端下发给客户端的指令
 message Command {
-  CommandType        type        = 1;
-  string             description = 2;
-  map<string, string> params     = 3;
+  CommandType        Type        = 1;
+  string             Description = 2;
+  map<string, string> Params     = 3;
 }
 
 enum CommandType {

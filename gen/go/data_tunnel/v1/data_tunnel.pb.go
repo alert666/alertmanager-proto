@@ -77,14 +77,14 @@ func (CommandType) EnumDescriptor() ([]byte, []int) {
 }
 
 type TunnelMessage struct {
-	state     protoimpl.MessageState `protogen:"open.v1"`
-	RequestId string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	TaskId string                 `protobuf:"bytes,1,opt,name=TaskId,proto3" json:"TaskId,omitempty"`
 	// Types that are valid to be assigned to Payload:
 	//
 	//	*TunnelMessage_Init
 	//	*TunnelMessage_CommandResult
 	//	*TunnelMessage_Command
-	Payload       isTunnelMessage_Payload `protobuf_oneof:"payload"`
+	Payload       isTunnelMessage_Payload `protobuf_oneof:"Payload"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -119,9 +119,9 @@ func (*TunnelMessage) Descriptor() ([]byte, []int) {
 	return file_api_data_tunnel_v1_data_tunnel_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *TunnelMessage) GetRequestId() string {
+func (x *TunnelMessage) GetTaskId() string {
 	if x != nil {
-		return x.RequestId
+		return x.TaskId
 	}
 	return ""
 }
@@ -166,16 +166,16 @@ type isTunnelMessage_Payload interface {
 
 type TunnelMessage_Init struct {
 	// Client → Server
-	Init *Init `protobuf:"bytes,10,opt,name=init,proto3,oneof"`
+	Init *Init `protobuf:"bytes,10,opt,name=Init,proto3,oneof"`
 }
 
 type TunnelMessage_CommandResult struct {
-	CommandResult *CommandResult `protobuf:"bytes,11,opt,name=command_result,json=commandResult,proto3,oneof"`
+	CommandResult *CommandResult `protobuf:"bytes,11,opt,name=CommandResult,proto3,oneof"`
 }
 
 type TunnelMessage_Command struct {
 	// Server → Client
-	Command *Command `protobuf:"bytes,20,opt,name=command,proto3,oneof"`
+	Command *Command `protobuf:"bytes,20,opt,name=Command,proto3,oneof"`
 }
 
 func (*TunnelMessage_Init) isTunnelMessage_Payload() {}
@@ -187,10 +187,10 @@ func (*TunnelMessage_Command) isTunnelMessage_Payload() {}
 // Client → Server: 客户端连上后发送的注册信息
 type Init struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
-	ClusterId     string                 `protobuf:"bytes,2,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
-	Version       string                 `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
-	Labels        map[string]string      `protobuf:"bytes,4,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	AgentId       string                 `protobuf:"bytes,1,opt,name=AgentId,proto3" json:"AgentId,omitempty"`
+	ClusterId     string                 `protobuf:"bytes,2,opt,name=ClusterId,proto3" json:"ClusterId,omitempty"`
+	Version       string                 `protobuf:"bytes,3,opt,name=Version,proto3" json:"Version,omitempty"`
+	Labels        map[string]string      `protobuf:"bytes,4,rep,name=Labels,proto3" json:"Labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -256,10 +256,10 @@ func (x *Init) GetLabels() map[string]string {
 // Client → Server: 命令执行结果
 type CommandResult struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CommandType   CommandType            `protobuf:"varint,1,opt,name=command_type,json=commandType,proto3,enum=api.data_tunnel.v1.CommandType" json:"command_type,omitempty"`
-	Ok            bool                   `protobuf:"varint,2,opt,name=ok,proto3" json:"ok,omitempty"`
-	Error         string                 `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
-	Data          []byte                 `protobuf:"bytes,4,opt,name=data,proto3" json:"data,omitempty"`
+	CommandType   CommandType            `protobuf:"varint,1,opt,name=CommandType,proto3,enum=api.data_tunnel.v1.CommandType" json:"CommandType,omitempty"`
+	Ok            bool                   `protobuf:"varint,2,opt,name=Ok,proto3" json:"Ok,omitempty"`
+	Error         string                 `protobuf:"bytes,3,opt,name=Error,proto3" json:"Error,omitempty"`
+	Data          []byte                 `protobuf:"bytes,4,opt,name=Data,proto3" json:"Data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -325,9 +325,9 @@ func (x *CommandResult) GetData() []byte {
 // Server → Client: 服务端下发给客户端的指令
 type Command struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Type          CommandType            `protobuf:"varint,1,opt,name=type,proto3,enum=api.data_tunnel.v1.CommandType" json:"type,omitempty"`
-	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	Params        map[string]string      `protobuf:"bytes,3,rep,name=params,proto3" json:"params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Type          CommandType            `protobuf:"varint,1,opt,name=Type,proto3,enum=api.data_tunnel.v1.CommandType" json:"Type,omitempty"`
+	Description   string                 `protobuf:"bytes,2,opt,name=Description,proto3" json:"Description,omitempty"`
+	Params        map[string]string      `protobuf:"bytes,3,rep,name=Params,proto3" json:"Params,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -387,33 +387,31 @@ var File_api_data_tunnel_v1_data_tunnel_proto protoreflect.FileDescriptor
 
 const file_api_data_tunnel_v1_data_tunnel_proto_rawDesc = "" +
 	"\n" +
-	"$api/data_tunnel/v1/data_tunnel.proto\x12\x12api.data_tunnel.v1\"\xee\x01\n" +
-	"\rTunnelMessage\x12\x1d\n" +
-	"\n" +
-	"request_id\x18\x01 \x01(\tR\trequestId\x12.\n" +
-	"\x04init\x18\n" +
-	" \x01(\v2\x18.api.data_tunnel.v1.InitH\x00R\x04init\x12J\n" +
-	"\x0ecommand_result\x18\v \x01(\v2!.api.data_tunnel.v1.CommandResultH\x00R\rcommandResult\x127\n" +
-	"\acommand\x18\x14 \x01(\v2\x1b.api.data_tunnel.v1.CommandH\x00R\acommandB\t\n" +
-	"\apayload\"\xd3\x01\n" +
-	"\x04Init\x12\x19\n" +
-	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x1d\n" +
-	"\n" +
-	"cluster_id\x18\x02 \x01(\tR\tclusterId\x12\x18\n" +
-	"\aversion\x18\x03 \x01(\tR\aversion\x12<\n" +
-	"\x06labels\x18\x04 \x03(\v2$.api.data_tunnel.v1.Init.LabelsEntryR\x06labels\x1a9\n" +
+	"$api/data_tunnel/v1/data_tunnel.proto\x12\x12api.data_tunnel.v1\"\xe6\x01\n" +
+	"\rTunnelMessage\x12\x16\n" +
+	"\x06TaskId\x18\x01 \x01(\tR\x06TaskId\x12.\n" +
+	"\x04Init\x18\n" +
+	" \x01(\v2\x18.api.data_tunnel.v1.InitH\x00R\x04Init\x12I\n" +
+	"\rCommandResult\x18\v \x01(\v2!.api.data_tunnel.v1.CommandResultH\x00R\rCommandResult\x127\n" +
+	"\aCommand\x18\x14 \x01(\v2\x1b.api.data_tunnel.v1.CommandH\x00R\aCommandB\t\n" +
+	"\aPayload\"\xd1\x01\n" +
+	"\x04Init\x12\x18\n" +
+	"\aAgentId\x18\x01 \x01(\tR\aAgentId\x12\x1c\n" +
+	"\tClusterId\x18\x02 \x01(\tR\tClusterId\x12\x18\n" +
+	"\aVersion\x18\x03 \x01(\tR\aVersion\x12<\n" +
+	"\x06Labels\x18\x04 \x03(\v2$.api.data_tunnel.v1.Init.LabelsEntryR\x06Labels\x1a9\n" +
 	"\vLabelsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x8d\x01\n" +
-	"\rCommandResult\x12B\n" +
-	"\fcommand_type\x18\x01 \x01(\x0e2\x1f.api.data_tunnel.v1.CommandTypeR\vcommandType\x12\x0e\n" +
-	"\x02ok\x18\x02 \x01(\bR\x02ok\x12\x14\n" +
-	"\x05error\x18\x03 \x01(\tR\x05error\x12\x12\n" +
-	"\x04data\x18\x04 \x01(\fR\x04data\"\xdc\x01\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x8c\x01\n" +
+	"\rCommandResult\x12A\n" +
+	"\vCommandType\x18\x01 \x01(\x0e2\x1f.api.data_tunnel.v1.CommandTypeR\vCommandType\x12\x0e\n" +
+	"\x02Ok\x18\x02 \x01(\bR\x02Ok\x12\x14\n" +
+	"\x05Error\x18\x03 \x01(\tR\x05Error\x12\x12\n" +
+	"\x04Data\x18\x04 \x01(\fR\x04Data\"\xdc\x01\n" +
 	"\aCommand\x123\n" +
-	"\x04type\x18\x01 \x01(\x0e2\x1f.api.data_tunnel.v1.CommandTypeR\x04type\x12 \n" +
-	"\vdescription\x18\x02 \x01(\tR\vdescription\x12?\n" +
-	"\x06params\x18\x03 \x03(\v2'.api.data_tunnel.v1.Command.ParamsEntryR\x06params\x1a9\n" +
+	"\x04Type\x18\x01 \x01(\x0e2\x1f.api.data_tunnel.v1.CommandTypeR\x04Type\x12 \n" +
+	"\vDescription\x18\x02 \x01(\tR\vDescription\x12?\n" +
+	"\x06Params\x18\x03 \x03(\v2'.api.data_tunnel.v1.Command.ParamsEntryR\x06Params\x1a9\n" +
 	"\vParamsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
 	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\xc7\x01\n" +
@@ -451,13 +449,13 @@ var file_api_data_tunnel_v1_data_tunnel_proto_goTypes = []any{
 	nil,                   // 6: api.data_tunnel.v1.Command.ParamsEntry
 }
 var file_api_data_tunnel_v1_data_tunnel_proto_depIdxs = []int32{
-	2, // 0: api.data_tunnel.v1.TunnelMessage.init:type_name -> api.data_tunnel.v1.Init
-	3, // 1: api.data_tunnel.v1.TunnelMessage.command_result:type_name -> api.data_tunnel.v1.CommandResult
-	4, // 2: api.data_tunnel.v1.TunnelMessage.command:type_name -> api.data_tunnel.v1.Command
-	5, // 3: api.data_tunnel.v1.Init.labels:type_name -> api.data_tunnel.v1.Init.LabelsEntry
-	0, // 4: api.data_tunnel.v1.CommandResult.command_type:type_name -> api.data_tunnel.v1.CommandType
-	0, // 5: api.data_tunnel.v1.Command.type:type_name -> api.data_tunnel.v1.CommandType
-	6, // 6: api.data_tunnel.v1.Command.params:type_name -> api.data_tunnel.v1.Command.ParamsEntry
+	2, // 0: api.data_tunnel.v1.TunnelMessage.Init:type_name -> api.data_tunnel.v1.Init
+	3, // 1: api.data_tunnel.v1.TunnelMessage.CommandResult:type_name -> api.data_tunnel.v1.CommandResult
+	4, // 2: api.data_tunnel.v1.TunnelMessage.Command:type_name -> api.data_tunnel.v1.Command
+	5, // 3: api.data_tunnel.v1.Init.Labels:type_name -> api.data_tunnel.v1.Init.LabelsEntry
+	0, // 4: api.data_tunnel.v1.CommandResult.CommandType:type_name -> api.data_tunnel.v1.CommandType
+	0, // 5: api.data_tunnel.v1.Command.Type:type_name -> api.data_tunnel.v1.CommandType
+	6, // 6: api.data_tunnel.v1.Command.Params:type_name -> api.data_tunnel.v1.Command.ParamsEntry
 	1, // 7: api.data_tunnel.v1.TunnelService.DataTunnel:input_type -> api.data_tunnel.v1.TunnelMessage
 	1, // 8: api.data_tunnel.v1.TunnelService.DataTunnel:output_type -> api.data_tunnel.v1.TunnelMessage
 	8, // [8:9] is the sub-list for method output_type
