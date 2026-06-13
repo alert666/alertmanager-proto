@@ -24,11 +24,13 @@ const (
 type CommandType int32
 
 const (
-	CommandType_COMMAND_TYPE_UNSPECIFIED             CommandType = 0
-	CommandType_COMMAND_TYPE_GET_ALERTMANAGER_CONFIG CommandType = 1
-	CommandType_COMMAND_TYPE_GET_PROMETHEUS_CONFIG   CommandType = 2
-	CommandType_COMMAND_TYPE_RELOAD_ALERTMANAGER     CommandType = 3
-	CommandType_COMMAND_TYPE_RELOAD_PROMETHEUS       CommandType = 4
+	CommandType_COMMAND_TYPE_UNSPECIFIED                CommandType = 0
+	CommandType_COMMAND_TYPE_GET_ALERTMANAGER_CONFIG    CommandType = 1
+	CommandType_COMMAND_TYPE_GET_PROMETHEUS_CONFIG      CommandType = 2
+	CommandType_COMMAND_TYPE_RELOAD_ALERTMANAGER        CommandType = 3
+	CommandType_COMMAND_TYPE_RELOAD_PROMETHEUS          CommandType = 4
+	CommandType_COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG CommandType = 5
+	CommandType_COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG   CommandType = 6
 )
 
 // Enum value maps for CommandType.
@@ -39,13 +41,17 @@ var (
 		2: "COMMAND_TYPE_GET_PROMETHEUS_CONFIG",
 		3: "COMMAND_TYPE_RELOAD_ALERTMANAGER",
 		4: "COMMAND_TYPE_RELOAD_PROMETHEUS",
+		5: "COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG",
+		6: "COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG",
 	}
 	CommandType_value = map[string]int32{
-		"COMMAND_TYPE_UNSPECIFIED":             0,
-		"COMMAND_TYPE_GET_ALERTMANAGER_CONFIG": 1,
-		"COMMAND_TYPE_GET_PROMETHEUS_CONFIG":   2,
-		"COMMAND_TYPE_RELOAD_ALERTMANAGER":     3,
-		"COMMAND_TYPE_RELOAD_PROMETHEUS":       4,
+		"COMMAND_TYPE_UNSPECIFIED":                0,
+		"COMMAND_TYPE_GET_ALERTMANAGER_CONFIG":    1,
+		"COMMAND_TYPE_GET_PROMETHEUS_CONFIG":      2,
+		"COMMAND_TYPE_RELOAD_ALERTMANAGER":        3,
+		"COMMAND_TYPE_RELOAD_PROMETHEUS":          4,
+		"COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG": 5,
+		"COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG":   6,
 	}
 )
 
@@ -77,14 +83,14 @@ func (CommandType) EnumDescriptor() ([]byte, []int) {
 }
 
 type TunnelMessage struct {
-	state     protoimpl.MessageState `protogen:"open.v1"`
-	RequestId string                 `protobuf:"bytes,1,opt,name=request_id,json=requestId,proto3" json:"request_id,omitempty"`
+	state  protoimpl.MessageState `protogen:"open.v1"`
+	TaskId string                 `protobuf:"bytes,1,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
 	// Types that are valid to be assigned to Payload:
 	//
 	//	*TunnelMessage_Init
 	//	*TunnelMessage_CommandResult
 	//	*TunnelMessage_Command
-	Payload       isTunnelMessage_Payload `protobuf_oneof:"payload"`
+	Payload       isTunnelMessage_Payload `protobuf_oneof:"Payload"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -119,9 +125,9 @@ func (*TunnelMessage) Descriptor() ([]byte, []int) {
 	return file_api_data_tunnel_v1_data_tunnel_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *TunnelMessage) GetRequestId() string {
+func (x *TunnelMessage) GetTaskId() string {
 	if x != nil {
-		return x.RequestId
+		return x.TaskId
 	}
 	return ""
 }
@@ -170,7 +176,7 @@ type TunnelMessage_Init struct {
 }
 
 type TunnelMessage_CommandResult struct {
-	CommandResult *CommandResult `protobuf:"bytes,11,opt,name=command_result,json=commandResult,proto3,oneof"`
+	CommandResult *CommandResult `protobuf:"bytes,11,opt,name=commandResult,proto3,oneof"`
 }
 
 type TunnelMessage_Command struct {
@@ -187,8 +193,8 @@ func (*TunnelMessage_Command) isTunnelMessage_Payload() {}
 // Client → Server: 客户端连上后发送的注册信息
 type Init struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	AgentId       string                 `protobuf:"bytes,1,opt,name=agent_id,json=agentId,proto3" json:"agent_id,omitempty"`
-	ClusterId     string                 `protobuf:"bytes,2,opt,name=cluster_id,json=clusterId,proto3" json:"cluster_id,omitempty"`
+	AgentID       string                 `protobuf:"bytes,1,opt,name=agentID,proto3" json:"agentID,omitempty"`
+	ClusterID     string                 `protobuf:"bytes,2,opt,name=clusterID,proto3" json:"clusterID,omitempty"`
 	Version       string                 `protobuf:"bytes,3,opt,name=version,proto3" json:"version,omitempty"`
 	Labels        map[string]string      `protobuf:"bytes,4,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
@@ -225,16 +231,16 @@ func (*Init) Descriptor() ([]byte, []int) {
 	return file_api_data_tunnel_v1_data_tunnel_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Init) GetAgentId() string {
+func (x *Init) GetAgentID() string {
 	if x != nil {
-		return x.AgentId
+		return x.AgentID
 	}
 	return ""
 }
 
-func (x *Init) GetClusterId() string {
+func (x *Init) GetClusterID() string {
 	if x != nil {
-		return x.ClusterId
+		return x.ClusterID
 	}
 	return ""
 }
@@ -256,8 +262,7 @@ func (x *Init) GetLabels() map[string]string {
 // Client → Server: 命令执行结果
 type CommandResult struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CommandType   CommandType            `protobuf:"varint,1,opt,name=command_type,json=commandType,proto3,enum=api.data_tunnel.v1.CommandType" json:"command_type,omitempty"`
-	Ok            bool                   `protobuf:"varint,2,opt,name=ok,proto3" json:"ok,omitempty"`
+	CommandType   CommandType            `protobuf:"varint,1,opt,name=commandType,proto3,enum=api.data_tunnel.v1.CommandType" json:"commandType,omitempty"`
 	Error         string                 `protobuf:"bytes,3,opt,name=error,proto3" json:"error,omitempty"`
 	Data          []byte                 `protobuf:"bytes,4,opt,name=data,proto3" json:"data,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -299,13 +304,6 @@ func (x *CommandResult) GetCommandType() CommandType {
 		return x.CommandType
 	}
 	return CommandType_COMMAND_TYPE_UNSPECIFIED
-}
-
-func (x *CommandResult) GetOk() bool {
-	if x != nil {
-		return x.Ok
-	}
-	return false
 }
 
 func (x *CommandResult) GetError() string {
@@ -387,27 +385,24 @@ var File_api_data_tunnel_v1_data_tunnel_proto protoreflect.FileDescriptor
 
 const file_api_data_tunnel_v1_data_tunnel_proto_rawDesc = "" +
 	"\n" +
-	"$api/data_tunnel/v1/data_tunnel.proto\x12\x12api.data_tunnel.v1\"\xee\x01\n" +
-	"\rTunnelMessage\x12\x1d\n" +
-	"\n" +
-	"request_id\x18\x01 \x01(\tR\trequestId\x12.\n" +
+	"$api/data_tunnel/v1/data_tunnel.proto\x12\x12api.data_tunnel.v1\"\xe7\x01\n" +
+	"\rTunnelMessage\x12\x17\n" +
+	"\atask_id\x18\x01 \x01(\tR\x06taskId\x12.\n" +
 	"\x04init\x18\n" +
-	" \x01(\v2\x18.api.data_tunnel.v1.InitH\x00R\x04init\x12J\n" +
-	"\x0ecommand_result\x18\v \x01(\v2!.api.data_tunnel.v1.CommandResultH\x00R\rcommandResult\x127\n" +
+	" \x01(\v2\x18.api.data_tunnel.v1.InitH\x00R\x04init\x12I\n" +
+	"\rcommandResult\x18\v \x01(\v2!.api.data_tunnel.v1.CommandResultH\x00R\rcommandResult\x127\n" +
 	"\acommand\x18\x14 \x01(\v2\x1b.api.data_tunnel.v1.CommandH\x00R\acommandB\t\n" +
-	"\apayload\"\xd3\x01\n" +
-	"\x04Init\x12\x19\n" +
-	"\bagent_id\x18\x01 \x01(\tR\aagentId\x12\x1d\n" +
-	"\n" +
-	"cluster_id\x18\x02 \x01(\tR\tclusterId\x12\x18\n" +
+	"\aPayload\"\xd1\x01\n" +
+	"\x04Init\x12\x18\n" +
+	"\aagentID\x18\x01 \x01(\tR\aagentID\x12\x1c\n" +
+	"\tclusterID\x18\x02 \x01(\tR\tclusterID\x12\x18\n" +
 	"\aversion\x18\x03 \x01(\tR\aversion\x12<\n" +
 	"\x06labels\x18\x04 \x03(\v2$.api.data_tunnel.v1.Init.LabelsEntryR\x06labels\x1a9\n" +
 	"\vLabelsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\x8d\x01\n" +
-	"\rCommandResult\x12B\n" +
-	"\fcommand_type\x18\x01 \x01(\x0e2\x1f.api.data_tunnel.v1.CommandTypeR\vcommandType\x12\x0e\n" +
-	"\x02ok\x18\x02 \x01(\bR\x02ok\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"|\n" +
+	"\rCommandResult\x12A\n" +
+	"\vcommandType\x18\x01 \x01(\x0e2\x1f.api.data_tunnel.v1.CommandTypeR\vcommandType\x12\x14\n" +
 	"\x05error\x18\x03 \x01(\tR\x05error\x12\x12\n" +
 	"\x04data\x18\x04 \x01(\fR\x04data\"\xdc\x01\n" +
 	"\aCommand\x123\n" +
@@ -416,13 +411,15 @@ const file_api_data_tunnel_v1_data_tunnel_proto_rawDesc = "" +
 	"\x06params\x18\x03 \x03(\v2'.api.data_tunnel.v1.Command.ParamsEntryR\x06params\x1a9\n" +
 	"\vParamsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\xc7\x01\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\x9f\x02\n" +
 	"\vCommandType\x12\x1c\n" +
 	"\x18COMMAND_TYPE_UNSPECIFIED\x10\x00\x12(\n" +
 	"$COMMAND_TYPE_GET_ALERTMANAGER_CONFIG\x10\x01\x12&\n" +
 	"\"COMMAND_TYPE_GET_PROMETHEUS_CONFIG\x10\x02\x12$\n" +
 	" COMMAND_TYPE_RELOAD_ALERTMANAGER\x10\x03\x12\"\n" +
-	"\x1eCOMMAND_TYPE_RELOAD_PROMETHEUS\x10\x042g\n" +
+	"\x1eCOMMAND_TYPE_RELOAD_PROMETHEUS\x10\x04\x12+\n" +
+	"'COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG\x10\x05\x12)\n" +
+	"%COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG\x10\x062g\n" +
 	"\rTunnelService\x12V\n" +
 	"\n" +
 	"DataTunnel\x12!.api.data_tunnel.v1.TunnelMessage\x1a!.api.data_tunnel.v1.TunnelMessage(\x010\x01B>Z<github.com/alert666/alertmanager-proto/gen/go/data_tunnel/v1b\x06proto3"
@@ -452,10 +449,10 @@ var file_api_data_tunnel_v1_data_tunnel_proto_goTypes = []any{
 }
 var file_api_data_tunnel_v1_data_tunnel_proto_depIdxs = []int32{
 	2, // 0: api.data_tunnel.v1.TunnelMessage.init:type_name -> api.data_tunnel.v1.Init
-	3, // 1: api.data_tunnel.v1.TunnelMessage.command_result:type_name -> api.data_tunnel.v1.CommandResult
+	3, // 1: api.data_tunnel.v1.TunnelMessage.commandResult:type_name -> api.data_tunnel.v1.CommandResult
 	4, // 2: api.data_tunnel.v1.TunnelMessage.command:type_name -> api.data_tunnel.v1.Command
 	5, // 3: api.data_tunnel.v1.Init.labels:type_name -> api.data_tunnel.v1.Init.LabelsEntry
-	0, // 4: api.data_tunnel.v1.CommandResult.command_type:type_name -> api.data_tunnel.v1.CommandType
+	0, // 4: api.data_tunnel.v1.CommandResult.commandType:type_name -> api.data_tunnel.v1.CommandType
 	0, // 5: api.data_tunnel.v1.Command.type:type_name -> api.data_tunnel.v1.CommandType
 	6, // 6: api.data_tunnel.v1.Command.params:type_name -> api.data_tunnel.v1.Command.ParamsEntry
 	1, // 7: api.data_tunnel.v1.TunnelService.DataTunnel:input_type -> api.data_tunnel.v1.TunnelMessage

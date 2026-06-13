@@ -1,4 +1,4 @@
-syntax = "proto3";
+﻿syntax = "proto3";
 
 package api.data_tunnel.v1;
 
@@ -9,11 +9,11 @@ service TunnelService {
 }
 
 message TunnelMessage {
-  string request_id = 1;
-  oneof payload {
+  string task_id = 1;
+  oneof Payload {
     // Client → Server
     Init          init           = 10;
-    CommandResult command_result = 11;
+    CommandResult commandResult = 11;
 
     // Server → Client
     Command command = 20;
@@ -22,16 +22,15 @@ message TunnelMessage {
 
 // Client → Server: 客户端连上后发送的注册信息
 message Init {
-  string agent_id   = 1;
-  string cluster_id = 2;
-  string version    = 3;
-  map<string, string> labels = 4;
+  string              agentID   = 1;
+  string              clusterID = 2;
+  string              version    = 3;
+  map<string, string> labels     = 4;
 }
 
 // Client → Server: 命令执行结果
 message CommandResult {
-  CommandType command_type = 1;
-  bool        ok           = 2;
+  CommandType commandType = 1;
   string      error        = 3;
   bytes       data         = 4;
 }
@@ -44,9 +43,11 @@ message Command {
 }
 
 enum CommandType {
-  COMMAND_TYPE_UNSPECIFIED             = 0;
-  COMMAND_TYPE_GET_ALERTMANAGER_CONFIG = 1;
-  COMMAND_TYPE_GET_PROMETHEUS_CONFIG   = 2;
-  COMMAND_TYPE_RELOAD_ALERTMANAGER     = 3;
-  COMMAND_TYPE_RELOAD_PROMETHEUS       = 4;
+  COMMAND_TYPE_UNSPECIFIED                    = 0;
+  COMMAND_TYPE_GET_ALERTMANAGER_CONFIG        = 1;
+  COMMAND_TYPE_GET_PROMETHEUS_CONFIG          = 2;
+  COMMAND_TYPE_RELOAD_ALERTMANAGER            = 3;
+  COMMAND_TYPE_RELOAD_PROMETHEUS              = 4;
+  COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG     = 5;
+  COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG       = 6;
 }
