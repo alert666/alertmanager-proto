@@ -31,6 +31,7 @@ const (
 	CommandType_COMMAND_TYPE_RELOAD_PROMETHEUS          CommandType = 4
 	CommandType_COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG CommandType = 5
 	CommandType_COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG   CommandType = 6
+	CommandType_COMMAND_TYPE_PROMETHEUS_PROBE           CommandType = 7
 )
 
 // Enum value maps for CommandType.
@@ -43,6 +44,7 @@ var (
 		4: "COMMAND_TYPE_RELOAD_PROMETHEUS",
 		5: "COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG",
 		6: "COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG",
+		7: "COMMAND_TYPE_PROMETHEUS_PROBE",
 	}
 	CommandType_value = map[string]int32{
 		"COMMAND_TYPE_UNSPECIFIED":                0,
@@ -52,6 +54,7 @@ var (
 		"COMMAND_TYPE_RELOAD_PROMETHEUS":          4,
 		"COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG": 5,
 		"COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG":   6,
+		"COMMAND_TYPE_PROMETHEUS_PROBE":           7,
 	}
 )
 
@@ -84,7 +87,7 @@ func (CommandType) EnumDescriptor() ([]byte, []int) {
 
 type TunnelMessage struct {
 	state  protoimpl.MessageState `protogen:"open.v1"`
-	TaskId string                 `protobuf:"bytes,1,opt,name=task_id,json=taskId,proto3" json:"task_id,omitempty"`
+	TaskID string                 `protobuf:"bytes,1,opt,name=taskID,proto3" json:"taskID,omitempty"`
 	// Types that are valid to be assigned to Payload:
 	//
 	//	*TunnelMessage_Init
@@ -125,9 +128,9 @@ func (*TunnelMessage) Descriptor() ([]byte, []int) {
 	return file_api_data_tunnel_v1_data_tunnel_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *TunnelMessage) GetTaskId() string {
+func (x *TunnelMessage) GetTaskID() string {
 	if x != nil {
-		return x.TaskId
+		return x.TaskID
 	}
 	return ""
 }
@@ -385,9 +388,9 @@ var File_api_data_tunnel_v1_data_tunnel_proto protoreflect.FileDescriptor
 
 const file_api_data_tunnel_v1_data_tunnel_proto_rawDesc = "" +
 	"\n" +
-	"$api/data_tunnel/v1/data_tunnel.proto\x12\x12api.data_tunnel.v1\"\xe7\x01\n" +
-	"\rTunnelMessage\x12\x17\n" +
-	"\atask_id\x18\x01 \x01(\tR\x06taskId\x12.\n" +
+	"$api/data_tunnel/v1/data_tunnel.proto\x12\x12api.data_tunnel.v1\"\xe6\x01\n" +
+	"\rTunnelMessage\x12\x16\n" +
+	"\x06taskID\x18\x01 \x01(\tR\x06taskID\x12.\n" +
 	"\x04init\x18\n" +
 	" \x01(\v2\x18.api.data_tunnel.v1.InitH\x00R\x04init\x12I\n" +
 	"\rcommandResult\x18\v \x01(\v2!.api.data_tunnel.v1.CommandResultH\x00R\rcommandResult\x127\n" +
@@ -411,7 +414,7 @@ const file_api_data_tunnel_v1_data_tunnel_proto_rawDesc = "" +
 	"\x06params\x18\x03 \x03(\v2'.api.data_tunnel.v1.Command.ParamsEntryR\x06params\x1a9\n" +
 	"\vParamsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\x9f\x02\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\xc2\x02\n" +
 	"\vCommandType\x12\x1c\n" +
 	"\x18COMMAND_TYPE_UNSPECIFIED\x10\x00\x12(\n" +
 	"$COMMAND_TYPE_GET_ALERTMANAGER_CONFIG\x10\x01\x12&\n" +
@@ -419,7 +422,8 @@ const file_api_data_tunnel_v1_data_tunnel_proto_rawDesc = "" +
 	" COMMAND_TYPE_RELOAD_ALERTMANAGER\x10\x03\x12\"\n" +
 	"\x1eCOMMAND_TYPE_RELOAD_PROMETHEUS\x10\x04\x12+\n" +
 	"'COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG\x10\x05\x12)\n" +
-	"%COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG\x10\x062g\n" +
+	"%COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG\x10\x06\x12!\n" +
+	"\x1dCOMMAND_TYPE_PROMETHEUS_PROBE\x10\a2g\n" +
 	"\rTunnelService\x12V\n" +
 	"\n" +
 	"DataTunnel\x12!.api.data_tunnel.v1.TunnelMessage\x1a!.api.data_tunnel.v1.TunnelMessage(\x010\x01B>Z<github.com/alert666/alertmanager-proto/gen/go/data_tunnel/v1b\x06proto3"

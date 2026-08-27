@@ -1,6 +1,6 @@
 module github.com/alert666/alertmanager-proto
 
-go 1.25.9
+go 1.26.5
 
 require (
 	google.golang.org/grpc v1.81.1
