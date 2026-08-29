@@ -31,7 +31,7 @@ const (
 	CommandType_COMMAND_TYPE_RELOAD_PROMETHEUS          CommandType = 4
 	CommandType_COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG CommandType = 5
 	CommandType_COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG   CommandType = 6
-	CommandType_COMMAND_TYPE_PROMETHEUS_PROBE           CommandType = 7
+	CommandType_COMMAND_TYPE_PROBE                      CommandType = 7
 )
 
 // Enum value maps for CommandType.
@@ -44,7 +44,7 @@ var (
 		4: "COMMAND_TYPE_RELOAD_PROMETHEUS",
 		5: "COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG",
 		6: "COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG",
-		7: "COMMAND_TYPE_PROMETHEUS_PROBE",
+		7: "COMMAND_TYPE_PROBE",
 	}
 	CommandType_value = map[string]int32{
 		"COMMAND_TYPE_UNSPECIFIED":                0,
@@ -54,7 +54,7 @@ var (
 		"COMMAND_TYPE_RELOAD_PROMETHEUS":          4,
 		"COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG": 5,
 		"COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG":   6,
-		"COMMAND_TYPE_PROMETHEUS_PROBE":           7,
+		"COMMAND_TYPE_PROBE":                      7,
 	}
 )
 
@@ -414,7 +414,7 @@ const file_api_data_tunnel_v1_data_tunnel_proto_rawDesc = "" +
 	"\x06params\x18\x03 \x03(\v2'.api.data_tunnel.v1.Command.ParamsEntryR\x06params\x1a9\n" +
 	"\vParamsEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\xc2\x02\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01*\xb7\x02\n" +
 	"\vCommandType\x12\x1c\n" +
 	"\x18COMMAND_TYPE_UNSPECIFIED\x10\x00\x12(\n" +
 	"$COMMAND_TYPE_GET_ALERTMANAGER_CONFIG\x10\x01\x12&\n" +
@@ -422,8 +422,8 @@ const file_api_data_tunnel_v1_data_tunnel_proto_rawDesc = "" +
 	" COMMAND_TYPE_RELOAD_ALERTMANAGER\x10\x03\x12\"\n" +
 	"\x1eCOMMAND_TYPE_RELOAD_PROMETHEUS\x10\x04\x12+\n" +
 	"'COMMAND_TYPE_UPDATE_ALERTMANAGER_CONFIG\x10\x05\x12)\n" +
-	"%COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG\x10\x06\x12!\n" +
-	"\x1dCOMMAND_TYPE_PROMETHEUS_PROBE\x10\a2g\n" +
+	"%COMMAND_TYPE_UPDATE_PROMETHEUS_CONFIG\x10\x06\x12\x16\n" +
+	"\x12COMMAND_TYPE_PROBE\x10\a2g\n" +
 	"\rTunnelService\x12V\n" +
 	"\n" +
 	"DataTunnel\x12!.api.data_tunnel.v1.TunnelMessage\x1a!.api.data_tunnel.v1.TunnelMessage(\x010\x01B>Z<github.com/alert666/alertmanager-proto/gen/go/data_tunnel/v1b\x06proto3"
